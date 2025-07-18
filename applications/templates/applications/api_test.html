@@ -1,0 +1,179 @@
+{% extends 'applications/base.html' %}
+
+{% block title %}API Тестирование{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center mb-5">
+                <i class="fas fa-code text-primary me-2"></i>
+                API Тестирование
+            </h1>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5><i class="fas fa-list text-primary me-2"></i>GET /api/v1/applications/</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Получить список всех заявок</p>
+                            <button class="btn btn-primary" onclick="testGetApplications()">
+                                <i class="fas fa-play me-2"></i>Тестировать
+                            </button>
+                            <div id="applications-result" class="mt-3"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5><i class="fas fa-chart-bar text-success me-2"></i>GET /api/v1/applications/stats/</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Получить статистику заявок</p>
+                            <button class="btn btn-success" onclick="testGetStats()">
+                                <i class="fas fa-play me-2"></i>Тестировать
+                            </button>
+                            <div id="stats-result" class="mt-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5><i class="fas fa-plus text-warning me-2"></i>POST /api/v1/applications/create/</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Создать новую заявку</p>
+                            <button class="btn btn-warning" onclick="testCreateApplication()">
+                                <i class="fas fa-play me-2"></i>Тестировать
+                            </button>
+                            <div id="create-result" class="mt-3"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5><i class="fas fa-book text-info me-2"></i>Swagger Documentation</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Интерактивная документация API</p>
+                            <a href="/swagger/" class="btn btn-info" target="_blank">
+                                <i class="fas fa-external-link-alt me-2"></i>Открыть Swagger
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function testGetApplications() {
+    const resultDiv = document.getElementById('applications-result');
+    resultDiv.innerHTML = '<div class="alert alert-info">Загрузка...</div>';
+    
+    fetch('/api/v1/applications/', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        resultDiv.innerHTML = `
+            <div class="alert alert-success">
+                <h6>Результат:</h6>
+                <pre>${JSON.stringify(data, null, 2)}</pre>
+            </div>
+        `;
+    })
+    .catch(error => {
+        resultDiv.innerHTML = `
+            <div class="alert alert-danger">
+                <h6>Ошибка:</h6>
+                <pre>${error.message}</pre>
+            </div>
+        `;
+    });
+}
+
+function testGetStats() {
+    const resultDiv = document.getElementById('stats-result');
+    resultDiv.innerHTML = '<div class="alert alert-info">Загрузка...</div>';
+    
+    fetch('/api/v1/applications/stats/', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        resultDiv.innerHTML = `
+            <div class="alert alert-success">
+                <h6>Результат:</h6>
+                <pre>${JSON.stringify(data, null, 2)}</pre>
+            </div>
+        `;
+    })
+    .catch(error => {
+        resultDiv.innerHTML = `
+            <div class="alert alert-danger">
+                <h6>Ошибка:</h6>
+                <pre>${error.message}</pre>
+            </div>
+        `;
+    });
+}
+
+function testCreateApplication() {
+    const resultDiv = document.getElementById('create-result');
+    resultDiv.innerHTML = '<div class="alert alert-info">Загрузка...</div>';
+    
+    const testData = {
+        name: 'Тестовый пользователь',
+        email: 'test@example.com',
+        phone: '+7 (999) 123-45-67',
+        message: 'Тестовое сообщение через API'
+    };
+    
+    fetch('/api/v1/applications/create/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: JSON.stringify(testData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        resultDiv.innerHTML = `
+            <div class="alert alert-success">
+                <h6>Результат:</h6>
+                <pre>${JSON.stringify(data, null, 2)}</pre>
+            </div>
+        `;
+    })
+    .catch(error => {
+        resultDiv.innerHTML = `
+            <div class="alert alert-danger">
+                <h6>Ошибка:</h6>
+                <pre>${error.message}</pre>
+            </div>
+        `;
+    });
+}
+</script>
+{% endblock %} 
