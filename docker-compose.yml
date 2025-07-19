@@ -20,10 +20,9 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    env_file:
+      - .env
     environment:
       - DJANGO_DB_HOST=db
-      - DJANGO_DB_NAME=landing_db
-      - DJANGO_DB_USER=postgres
-      - DJANGO_DB_PASSWORD=postgres
 volumes:
   postgres_data: 
