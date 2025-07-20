@@ -1,6 +1,7 @@
 import requests
 import os
 from django.conf import settings
+import pytz
 
 class TelegramNotifier:
     """Сервис для отправки уведомлений в Telegram"""
@@ -32,6 +33,9 @@ class TelegramNotifier:
     
     def notify_new_application(self, application):
         """Уведомление о новой заявке"""
+        moscow_tz = pytz.timezone('Europe/Moscow')
+        created_at_moscow = application.created_at.astimezone(moscow_tz)
+        created_at_str = created_at_moscow.strftime('%d.%m.%Y %H:%M')
         message = f"""
 🔔 <b>Новая заявка!</b>
 
@@ -39,7 +43,7 @@ class TelegramNotifier:
 📧 <b>Email:</b> {application.email}
 📱 <b>Телефон:</b> {application.phone}
 📝 <b>Сообщение:</b> {application.message or 'Не указано'}
-⏰ <b>Дата:</b> {application.created_at.strftime('%d.%m.%Y %H:%M')}
+⏰ <b>Дата:</b> {created_at_str}
         """.strip()
         
         return self.send_message(message)

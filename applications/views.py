@@ -5,15 +5,12 @@ from .forms import ApplicationForm
 from .models import Application
 from .telegram_service import telegram_notifier
 
-# Create your views here.
-
 def home(request):
     """Главная страница с формой заявки"""
     if request.method == 'POST':
         form = ApplicationForm(request.POST)
         if form.is_valid():
             application = form.save()
-            # Отправляем уведомление в Telegram
             telegram_notifier.notify_new_application(application)
             messages.success(request, 'Ваша заявка успешно отправлена!')
             return redirect('home')
@@ -32,7 +29,6 @@ def submit_application(request):
         form = ApplicationForm(request.POST)
         if form.is_valid():
             application = form.save()
-            # Отправляем уведомление в Telegram
             telegram_notifier.notify_new_application(application)
             return JsonResponse({
                 'success': True,

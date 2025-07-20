@@ -116,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'Asia/Tashkent'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -147,5 +147,5 @@ REST_FRAMEWORK = {
 }
 
 # Telegram Bot settings
-TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN', '')
-TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID', '')
+TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN', '7934227258:AAHRWF1tt-n5SWY-fWXnEB1lE-x8HIihsxw')
+TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID', '1478281629')
