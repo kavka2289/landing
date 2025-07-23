@@ -147,5 +147,5 @@ REST_FRAMEWORK = {
 }
 
 # Telegram Bot settings
-TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN', '7934227258:AAHRWF1tt-n5SWY-fWXnEB1lE-x8HIihsxw')
-TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID', '1478281629')
+TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN', '')
+TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID', '')
