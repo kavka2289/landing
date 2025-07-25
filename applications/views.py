@@ -11,7 +11,7 @@ def home(request):
         form = ApplicationForm(request.POST)
         if form.is_valid():
             application = form.save()
-            telegram_notifier.notify_new_application(application)
+            telegram_notifier.notify_new_application_sync(application)
             messages.success(request, 'Ваша заявка успешно отправлена!')
             return redirect('home')
         else:
@@ -29,7 +29,7 @@ def submit_application(request):
         form = ApplicationForm(request.POST)
         if form.is_valid():
             application = form.save()
-            telegram_notifier.notify_new_application(application)
+            telegram_notifier.notify_new_application_sync(application)
             return JsonResponse({
                 'success': True,
                 'message': 'Ваша заявка успешно отправлена!'

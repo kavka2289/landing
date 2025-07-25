@@ -37,3 +37,52 @@
 ---
 
 Если что-то не работает — смотрите логи, проверяйте настройки .env и токен Telegram. Всё остальное стандартно для Django. 
+
+
+Как развернуть проект
+
+1. Клонируйте репозиторий
+
+git clone https://github.com/ВАШ_ЛОГИН/ВАШ_РЕПОЗИТОРИЙ.git
+cd ВАШ_РЕПОЗИТОРИЙ
+
+2. Создайте и настройте .env
+Скопируйте пример:
+
+cp docker.env.example .env
+
+И укажите свои значения для TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID.
+
+3. Установите зависимости
+
+python -m venv venv
+source venv/bin/activate  или venv\Scripts\activate для Windows
+pip install -r requirements.txt
+
+4. Примените миграции
+
+python manage.py migrate
+
+5. Запустите сервер
+
+python manage.py runserver
+
+6. Запустите асинхронного Telegram-бота (опционально)
+
+python manage.py async_telegram_bot
+
+---
+
+Запуск через Docker
+
+1. Скопируйте docker.env.example в .env и настройте переменные.
+2. Запустите:
+
+docker-compose up --build
+
+---
+
+Примечания
+- Для работы Telegram-уведомлений обязательно настройте переменные окружения.
+- Асинхронный бот запускается отдельной командой и может работать параллельно с Django.
+- Для продакшена используйте PostgreSQL (см. docker-compose.yml). 
