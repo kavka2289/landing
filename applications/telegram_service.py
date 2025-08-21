@@ -1,6 +1,4 @@
 import aiohttp
-import asyncio
-import os
 from django.conf import settings
 import pytz
 from asgiref.sync import async_to_sync

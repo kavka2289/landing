@@ -30,7 +30,10 @@ SECRET_KEY = 'django-insecure-11h3%)_qq!tgy(1ax78ku9iq2pzeb#ssr38o+%629s3e2%nw)m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [host.strip() for host in os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',') if host.strip()]
+
+# CSRF trusted origins (comma-separated list like: https://example.com,https://sub.example.com)
+CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in os.environ.get('DJANGO_CSRF_TRUSTED_ORIGINS', '').split(',') if origin.strip()]
 
 
 # Application definition

@@ -11,9 +11,15 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: >
+      sh -c "
+      python manage.py migrate --noinput &&
+      python manage.py collectstatic --noinput &&
+      python manage.py runserver 0.0.0.0:8000
+      "
     volumes:
       - .:/code
     ports:
@@ -24,5 +30,6 @@ services:
       - .env
     environment:
       - DJANGO_DB_HOST=db
+
 volumes:
-  postgres_data: 
+  postgres_data:
